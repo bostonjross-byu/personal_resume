@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Boston Celtics Trivia (HTML + CSS)</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      color: #1b1b1b;
+      margin: 0;
+      padding: 28px;
+    }
+
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+    }
+
+    a { color: #1e30f3; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      display: inline-block;
+      background: #f7f7fb;
+      border: 1px solid #e6e6f3;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 14px;
+    }
+
+    .card {
+      background: #fbfbff;
+      border: 1px solid #e8eaff;
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 18px;
+    }
+
+    .answers {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .answer {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #d7dafb;
+      background: white;
+    }
+
+    .answer:hover {
+      border-color: #1e30f3;
+    }
+
+    /* Feedback sections are hidden by default */
+    .feedback {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid;
+    }
+
+    /* When the URL targets a feedback id, show it */
+    .feedback:target {
+      display: block;
+    }
+
+    .correct {
+      background: #eefcf1;
+      border-color: #2e9e4f;
+    }
+
+    .wrong {
+      background: #fff2f2;
+      border-color: #c23434;
+    }
+
+    .next {
+      margin-top: 12px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #1e30f3;
+      color: white;
+      font-size: 14px;
+    }
+
+    .btn:hover { text-decoration: none; opacity: 0.95; }
+
+    .small {
+      color: #555;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    hr { border: 0; border-top: 1px solid #eee; margin: 18px 0; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <a href="scratch.html">← Back to Beyond the Resume</a>
+      <span class="pill">Interactive Trivia Experience (HTML + CSS)</span>
+    </div>
+
+    <h1>Boston Celtics Trivia</h1>
+    <p class="small">
+      This mini “web app” demonstrates interaction using HTML anchor navigation and CSS visual feedback (no JavaScript).
+      Click an answer to see feedback, then move to the next question.
+    </p>
+
+    <hr>
+
+    <!-- Question 1 -->
+    <div class="card" id="q1">
+      <h2>Question 1</h2>
+      <p>What is the Celtics’ team color most commonly associated with the franchise?</p>
+
+      <div class="answers">
+        <a class="answer" href="#q1-wrong">Purple</a>
+        <a class="answer" href="#q1-correct">Green</a>
+        <a class="answer" href="#q1-wrong">Orange</a>
+        <a class="answer" href="#q1-wrong">Black</a>
+      </div>
+
+      <div class="feedback correct" id="q1-correct">
+        ✅ Correct — Celtics green is iconic.
+        <div class="next"><a class="btn" href="#q2">Next Question</a></div>
+      </div>
+
+      <div class="feedback wrong" id="q1-wrong">
+        ❌ Not quite — try again.
+      </div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="card" id="q2">
+      <h2>Question 2</h2>
+      <p>Which city do the Boston Celtics represent?</p>
+
+      <div class="answers">
+        <a class="answer" href="#q2-wrong">Chicago</a>
+        <a class="answer" href="#q2-wrong">Miami</a>
+        <a class="answer" href="#q2-correct">Boston</a>
+        <a class="answer" href="#q2-wrong">Los Angeles</a>
+      </div>
+
+      <div class="feedback correct" id="q2-correct">
+        ✅ Correct — Boston through and through.
+        <div class="next"><a class="btn" href="#q3">Next Question</a></div>
+      </div>
+
+      <div class="feedback wrong" id="q2-wrong">
+        ❌ Not quite — try again.
+      </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="card" id="q3">
+      <h2>Question 3</h2>
+      <p>What symbol is strongly associated with the Celtics brand?</p>
+
+      <div class="answers">
+        <a class="answer" href="#q3-wrong">A tiger</a>
+        <a class="answer" href="#q3-correct">A leprechaun</a>
+        <a class="answer" href="#q3-wrong">A wolf</a>
+        <a class="answer" href="#q3-wrong">A falcon</a>
+      </div>
+
+      <div class="feedback correct" id="q3-correct">
+        ✅ Correct — Lucky the Leprechaun.
+        <div class="next"><a class="btn" href="#q4">Next Question</a></div>
+      </div>
+
+      <div class="feedback wrong" id="q3-wrong">
+        ❌ Not quite — try again.
+      </div>
+    </div>
+    
+<!-- Question 4 -->
+<div class="card" id="q4">
+  <h2>Question 4</h2>
+  <p>Who is my favorite Boston Celtics player?</p>
+
+  <div class="answers">
+    <a class="answer" href="#q4-wrong">Larry Bird</a>
+    <a class="answer" href="#q4-wrong">Jayson Tatum</a>
+    <a class="answer" href="#q4-correct">Payton Pritchard</a>
+    <a class="answer" href="#q4-wrong">Marcus Smart</a>
+  </div>
+
+  <div class="feedback correct" id="q4-correct">
+    ✅ Correct — Payton Pritchard.
+    <div class="next"><a class="btn" href="#finish">Finish</a></div>
+  </div>
+
+  <div class="feedback wrong" id="q4-wrong">
+    ❌ Not quite — try again.
+  </div>
+</div>
+
+    <!-- Finish -->
+    <div class="card" id="finish">
+      <h2>Nice work!</h2>
+      <p>You completed the trivia experience.</p>
+      <p class="small">
+        You can restart by clicking Question 1 again, or return to the scratch page.
+      </p>
+      <p>
+        <a class="btn" href="#q1">Restart</a>
+        &nbsp;
+        <a class="btn" href="scratch.html">Back to Beyond the Resume</a>
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>
