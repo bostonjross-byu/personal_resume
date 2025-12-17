@@ -2,238 +2,374 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Boston Celtics Trivia (HTML + CSS)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Boston Celtics Trivia</title>
 
   <style>
+    /* ===== Celtics Theme (Option 1) + Basketball vibe (Option 2/4) ===== */
+    :root{
+      --celtics-green: #007A33;
+      --celtics-dark:  #005A24;
+      --accent-gold:   #BA9653;
+      --card-bg:       #ffffff;
+      --text-dark:     #1f2937;
+      --muted:         #6b7280;
+      --soft:          #E8F5EE;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      color: #1b1b1b;
       margin: 0;
-      padding: 28px;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      text-align: center;
+      background: linear-gradient(135deg, var(--celtics-green), var(--celtics-dark));
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle basketball pattern overlay (pure CSS) */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image:
+        radial-gradient(circle at 12% 20%, rgba(255,255,255,0.25) 0 2px, transparent 3px),
+        radial-gradient(circle at 78% 35%, rgba(255,255,255,0.20) 0 2px, transparent 3px),
+        radial-gradient(circle at 30% 72%, rgba(255,255,255,0.20) 0 2px, transparent 3px),
+        radial-gradient(circle at 90% 80%, rgba(255,255,255,0.15) 0 2px, transparent 3px);
+      background-size: 240px 240px;
+    }
+
+    header {
+      padding: 28px 16px 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+
+    .subtitle {
+      margin: 10px auto 0;
+      max-width: 760px;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.5;
+    }
+
+    /* Celtics banner (Option 4) */
+    .banner {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.22);
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.95);
     }
 
     .wrap {
-      max-width: 900px;
-      margin: 0 auto;
-      background: white;
-      padding: 24px;
-      border-radius: 12px;
+      position: relative;
+      z-index: 1;
+      padding: 18px 16px 40px;
     }
 
-    a { color: #1e30f3; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    /* Game card container (Option 1) */
+    .game-container {
+      background: var(--card-bg);
+      color: var(--text-dark);
+      max-width: 760px;
+      margin: 18px auto 0;
+      padding: 26px 22px;
+      border-radius: 16px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+      text-align: left;
+    }
 
-    .nav {
+    .top-row {
       display: flex;
-      justify-content: space-between;
       gap: 12px;
+      align-items: center;
+      justify-content: space-between;
       flex-wrap: wrap;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .pill {
-      display: inline-block;
-      background: #f7f7fb;
-      border: 1px solid #e6e6f3;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       padding: 8px 12px;
       border-radius: 999px;
-      font-size: 14px;
+      background: #f3f4f6;
+      color: var(--muted);
+      font-size: 0.95rem;
+      border: 1px solid #e5e7eb;
     }
 
-    .card {
-      background: #fbfbff;
-      border: 1px solid #e8eaff;
-      border-radius: 12px;
-      padding: 18px;
+    .pill strong { color: var(--text-dark); }
+
+    .question {
+      margin: 18px 0 8px;
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+
+    .hint {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Styled answer choices (Option 3) */
+    .answers label {
+      display: block;
+      padding: 12px 12px;
+      margin: 10px 0;
+      border: 2px solid var(--celtics-green);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.18s ease, transform 0.08s ease;
+      background: #fff;
+    }
+
+    .answers label:hover {
+      background: var(--soft);
+      transform: translateY(-1px);
+    }
+
+    .answers input[type="radio"] {
+      margin-right: 10px;
+      transform: translateY(1px);
+    }
+
+    .divider {
+      margin: 18px 0;
+      height: 1px;
+      background: #e5e7eb;
+      border: 0;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-top: 18px;
     }
 
-    .answers {
-      margin-top: 12px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .answer {
-      display: block;
-      padding: 12px 14px;
+    button {
+      border: 0;
+      cursor: pointer;
+      font-weight: 800;
       border-radius: 10px;
-      border: 1px solid #d7dafb;
-      background: white;
+      padding: 12px 16px;
+      font-size: 1rem;
     }
 
-    .answer:hover {
-      border-color: #1e30f3;
-    }
-
-    /* Feedback sections are hidden by default */
-    .feedback {
-      display: none;
-      margin-top: 14px;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border: 1px solid;
-    }
-
-    /* When the URL targets a feedback id, show it */
-    .feedback:target {
-      display: block;
-    }
-
-    .correct {
-      background: #eefcf1;
-      border-color: #2e9e4f;
-    }
-
-    .wrong {
-      background: #fff2f2;
-      border-color: #c23434;
-    }
-
-    .next {
-      margin-top: 12px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 10px 14px;
-      border-radius: 10px;
-      background: #1e30f3;
+    .btn-primary {
+      background: var(--celtics-green);
       color: white;
-      font-size: 14px;
     }
 
-    .btn:hover { text-decoration: none; opacity: 0.95; }
-
-    .small {
-      color: #555;
-      font-size: 13px;
-      margin-top: 6px;
+    .btn-primary:hover {
+      background: var(--celtics-dark);
     }
 
-    hr { border: 0; border-top: 1px solid #eee; margin: 18px 0; }
+    .btn-outline {
+      background: white;
+      color: var(--celtics-green);
+      border: 2px solid var(--celtics-green);
+    }
+
+    .btn-outline:hover {
+      background: var(--soft);
+    }
+
+    .result {
+      margin-top: 18px;
+      padding: 14px 14px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+    }
+
+    .result-title {
+      margin: 0 0 6px;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .result-text {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .score {
+      margin-top: 10px;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    footer {
+      margin-top: 18px;
+      text-align: center;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.95rem;
+    }
+
+    footer a {
+      color: #fff;
+      font-weight: 800;
+      text-decoration: underline;
+    }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="nav">
-      <a href="scratch.html">← Back to Beyond the Resume</a>
-      <span class="pill">Interactive Trivia Experience (HTML + CSS)</span>
-    </div>
-
-    <h1>Boston Celtics Trivia</h1>
-    <p class="small">
-      This mini “web app” demonstrates interaction using HTML anchor navigation and CSS visual feedback (no JavaScript).
-      Click an answer to see feedback, then move to the next question.
+  <header>
+    <h1 class="title">🏀 Boston Celtics Trivia 🏀</h1>
+    <p class="subtitle">
+      A quick, themed trivia experience. Built as a simple web app to showcase clean structure, layout, and styling — and a little Celtics pride.
     </p>
+    <div class="banner">Inspired by the Boston Celtics legacy ☘️</div>
+  </header>
 
-    <hr>
-
-    <!-- Question 1 -->
-    <div class="card" id="q1">
-      <h2>Question 1</h2>
-      <p>What is the Celtics’ team color most commonly associated with the franchise?</p>
-
-      <div class="answers">
-        <a class="answer" href="#q1-wrong">Purple</a>
-        <a class="answer" href="#q1-correct">Green</a>
-        <a class="answer" href="#q1-wrong">Orange</a>
-        <a class="answer" href="#q1-wrong">Black</a>
+  <div class="wrap">
+    <main class="game-container">
+      <div class="top-row">
+        <div class="pill">☘️ Theme: <strong>Celtics Green</strong></div>
+        <div class="pill">🏆 Try for: <strong>4/4</strong></div>
+        <div class="pill">⭐ Bonus: <strong>Favorite Player</strong></div>
       </div>
 
-      <div class="feedback correct" id="q1-correct">
-        ✅ Correct — Celtics green is iconic.
-        <div class="next"><a class="btn" href="#q2">Next Question</a></div>
-      </div>
+      <form id="quizForm">
+        <hr class="divider" />
 
-      <div class="feedback wrong" id="q1-wrong">
-        ❌ Not quite — try again.
-      </div>
-    </div>
+        <!-- Q1 -->
+        <p class="question">🏆 Q1) Which team has the most NBA championships?</p>
+        <p class="hint">Pick the best answer.</p>
+        <div class="answers">
+          <label><input type="radio" name="q1" value="a"> Los Angeles Lakers</label>
+          <label><input type="radio" name="q1" value="b"> Boston Celtics</label>
+          <label><input type="radio" name="q1" value="c"> Chicago Bulls</label>
+          <label><input type="radio" name="q1" value="d"> Golden State Warriors</label>
+        </div>
 
-    <!-- Question 2 -->
-    <div class="card" id="q2">
-      <h2>Question 2</h2>
-      <p>Which city do the Boston Celtics represent?</p>
+        <hr class="divider" />
 
-      <div class="answers">
-        <a class="answer" href="#q2-wrong">Chicago</a>
-        <a class="answer" href="#q2-wrong">Miami</a>
-        <a class="answer" href="#q2-correct">Boston</a>
-        <a class="answer" href="#q2-wrong">Los Angeles</a>
-      </div>
+        <!-- Q2 -->
+        <p class="question">🏀 Q2) What color is most associated with the Celtics?</p>
+        <p class="hint">You see it everywhere in TD Garden.</p>
+        <div class="answers">
+          <label><input type="radio" name="q2" value="a"> Purple</label>
+          <label><input type="radio" name="q2" value="b"> Green</label>
+          <label><input type="radio" name="q2" value="c"> Orange</label>
+          <label><input type="radio" name="q2" value="d"> Blue</label>
+        </div>
 
-      <div class="feedback correct" id="q2-correct">
-        ✅ Correct — Boston through and through.
-        <div class="next"><a class="btn" href="#q3">Next Question</a></div>
-      </div>
+        <hr class="divider" />
 
-      <div class="feedback wrong" id="q2-wrong">
-        ❌ Not quite — try again.
-      </div>
-    </div>
+        <!-- Q3 -->
+        <p class="question">☘️ Q3) Which Celtics legend is known as “Larry Legend”?</p>
+        <p class="hint">A famous sharpshooter and all-time great.</p>
+        <div class="answers">
+          <label><input type="radio" name="q3" value="a"> Larry Bird</label>
+          <label><input type="radio" name="q3" value="b"> Kevin Garnett</label>
+          <label><input type="radio" name="q3" value="c"> Paul Pierce</label>
+          <label><input type="radio" name="q3" value="d"> Ray Allen</label>
+        </div>
 
-    <!-- Question 3 -->
-    <div class="card" id="q3">
-      <h2>Question 3</h2>
-      <p>What symbol is strongly associated with the Celtics brand?</p>
+        <hr class="divider" />
 
-      <div class="answers">
-        <a class="answer" href="#q3-wrong">A tiger</a>
-        <a class="answer" href="#q3-correct">A leprechaun</a>
-        <a class="answer" href="#q3-wrong">A wolf</a>
-        <a class="answer" href="#q3-wrong">A falcon</a>
-      </div>
+        <!-- Q4 -->
+        <p class="question">⭐ Q4) Who is Boston’s favorite Celtics player?</p>
+        <p class="hint">This one is personal — but there is a correct answer 😉</p>
+        <div class="answers">
+          <label><input type="radio" name="q4" value="a"> Larry Bird</label>
+          <label><input type="radio" name="q4" value="b"> Jayson Tatum</label>
+          <label><input type="radio" name="q4" value="c"> Marcus Smart</label>
+          <label><input type="radio" name="q4" value="d"> Payton Pritchard</label>
+        </div>
 
-      <div class="feedback correct" id="q3-correct">
-        ✅ Correct — Lucky the Leprechaun.
-        <div class="next"><a class="btn" href="#q4">Next Question</a></div>
-      </div>
+        <div class="actions">
+          <button class="btn-primary" type="button" onclick="gradeQuiz()">🏀 Submit Answers</button>
+          <button class="btn-outline" type="reset" onclick="resetResult()">↻ Reset</button>
+        </div>
 
-      <div class="feedback wrong" id="q3-wrong">
-        ❌ Not quite — try again.
-      </div>
-    </div>
-    
-<!-- Question 4 -->
-<div class="card" id="q4">
-  <h2>Question 4</h2>
-  <p>Who is my favorite Boston Celtics player?</p>
+        <div id="resultBox" class="result" style="display:none;">
+          <p class="result-title" id="resultTitle">Results</p>
+          <p class="result-text" id="resultText"></p>
+          <div class="score" id="scoreText"></div>
+        </div>
+      </form>
+    </main>
 
-  <div class="answers">
-    <a class="answer" href="#q4-wrong">Larry Bird</a>
-    <a class="answer" href="#q4-wrong">Jayson Tatum</a>
-    <a class="answer" href="#q4-correct">Payton Pritchard</a>
-    <a class="answer" href="#q4-wrong">Marcus Smart</a>
-  </div>
-
-  <div class="feedback correct" id="q4-correct">
-    ✅ Correct — Payton Pritchard.
-    <div class="next"><a class="btn" href="#finish">Finish</a></div>
-  </div>
-
-  <div class="feedback wrong" id="q4-wrong">
-    ❌ Not quite — try again.
-  </div>
-</div>
-
-    <!-- Finish -->
-    <div class="card" id="finish">
-      <h2>Nice work!</h2>
-      <p>You completed the trivia experience.</p>
-      <p class="small">
-        You can restart by clicking Question 1 again, or return to the scratch page.
+    <footer>
+      <p style="margin: 18px 0 0;">
+        <a href="scratch.html">← Back to Beyond the Resume</a>
       </p>
-      <p>
-        <a class="btn" href="#q1">Restart</a>
-        &nbsp;
-        <a class="btn" href="scratch.html">Back to Beyond the Resume</a>
-      </p>
-    </div>
-
+    </footer>
   </div>
+
+  <script>
+    // Simple grading (kept minimal & clear)
+    const answers = {
+      q1: "b", // Celtics
+      q2: "b", // Green
+      q3: "a", // Larry Bird
+      q4: "d"  // Payton Pritchard
+    };
+
+    function gradeQuiz() {
+      const form = document.getElementById("quizForm");
+      let score = 0;
+      let missing = [];
+
+      for (const q of Object.keys(answers)) {
+        const picked = form.querySelector(`input[name="${q}"]:checked`);
+        if (!picked) missing.push(q.toUpperCase());
+        else if (picked.value === answers[q]) score++;
+      }
+
+      const resultBox = document.getElementById("resultBox");
+      const resultTitle = document.getElementById("resultTitle");
+      const resultText = document.getElementById("resultText");
+      const scoreText = document.getElementById("scoreText");
+
+      resultBox.style.display = "block";
+
+      if (missing.length > 0) {
+        resultTitle.textContent = "Almost there!";
+        resultText.textContent = `You skipped: ${missing.join(", ")}. Answer every question to see your score.`;
+        scoreText.textContent = "";
+        return;
+      }
+
+      resultTitle.textContent = "Final Score ☘️";
+      scoreText.textContent = `${score} / 4`;
+
+      if (score === 4) {
+        resultText.textContent = "Perfect! You’re championship-ready. 🏆";
+      } else if (score === 3) {
+        resultText.textContent = "Great work — one step away from perfect!";
+      } else if (score === 2) {
+        resultText.textContent = "Solid! Run it back and go for 4/4.";
+      } else {
+        resultText.textContent = "No worries — try again and you’ll improve fast.";
+      }
+    }
+
+    function resetResult() {
+      const resultBox = document.getElementById("resultBox");
+      resultBox.style.display = "none";
+    }
+  </script>
 </body>
 </html>
